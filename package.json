@@ -16,7 +16,7 @@
     "javascript"
   ],
   "dependencies": {
-    "interactjs": "1.10.27",
+    "interactjs": "^1.10.27",
     "npm": "^10.5.1"
   }
 }
