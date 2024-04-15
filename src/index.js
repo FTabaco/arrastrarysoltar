@@ -9,10 +9,10 @@ const dragPositions = [1, 2, 3, 4].reduce((acc, n) => {
   return acc;
 }, {});
 
-// Configuración de interacciones máximas
+//Configuración de interacciones máximas
 interact.maxInteractions(Infinity);
 
-// Configuración de los elementos arrastrables
+//*Configuración de los elementos arrastrables
 interact(".js-drag").draggable({
   listeners: {
     start(event) {
@@ -30,14 +30,14 @@ interact(".js-drag").draggable({
       // Aplica la transformación de acuerdo a la propiedad compatible
       if (transformProp) {
         event.target.style[transformProp] =
-          "translate(" + position.x + "px, " + position.y + "px)";
+          "translate(" + position.x+ "px, " + position.y + "px)";
       } else {
         event.target.style.left = position.x + "px";
         event.target.style.top = position.y + "px";
       }
     },
     end(event) {
-      // Al finalizar el arrastre, guarda la posición final del elemento
+      //* Al finalizar el arrastre, guarda la posición final del elemento
       const position = dragPositions[event.target.id];
       event.target.setAttribute("data-x", position.x);
       event.target.setAttribute("data-y", position.y);
@@ -45,7 +45,7 @@ interact(".js-drag").draggable({
   },
 });
 
-// Configuración de las áreas de destino
+//* Configuración de las áreas de destino
 setupDropzone("#drop1", "#drag1"); // dropzone #1 acepta el draggable #1
 setupDropzone("#drop2", "#drag1, #drag2"); // dropzone #2 acepta el draggable #1 y #2
 setupDropzone(".js-drop", "#drag3"); // cada dropzone acepta el draggable #3
@@ -140,3 +140,4 @@ interact(document).on("ready", () => {
               ? "msTransform"
               : null;
 });
+//esto es solo un ejemplo tengo que añadir muchas mas cosas aun e implementar esto dentro de lo que queremos preparar realmente pero no sin antes hacer las comprobaciones necesarias asi como preparar toda la documentación que el profesor me mande durante estos dia

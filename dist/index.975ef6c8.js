@@ -602,9 +602,9 @@ const dragPositions = [
     };
     return acc;
 }, {});
-// Configuración de interacciones máximas
+//Configuración de interacciones máximas
 (0, _interactjsDefault.default).maxInteractions(Infinity);
-// Configuración de los elementos arrastrables
+//*Configuración de los elementos arrastrables
 (0, _interactjsDefault.default)(".js-drag").draggable({
     listeners: {
         start (event) {
@@ -626,14 +626,14 @@ const dragPositions = [
             }
         },
         end (event) {
-            // Al finalizar el arrastre, guarda la posición final del elemento
+            //* Al finalizar el arrastre, guarda la posición final del elemento
             const position = dragPositions[event.target.id];
             event.target.setAttribute("data-x", position.x);
             event.target.setAttribute("data-y", position.y);
         }
     }
 });
-// Configuración de las áreas de destino
+//* Configuración de las áreas de destino
 setupDropzone("#drop1", "#drag1"); // dropzone #1 acepta el draggable #1
 setupDropzone("#drop2", "#drag1, #drag2"); // dropzone #2 acepta el draggable #1 y #2
 setupDropzone(".js-drop", "#drag3"); // cada dropzone acepta el draggable #3
@@ -696,7 +696,7 @@ function removeClass(element, className) {
 // Verifica la propiedad de transformación compatible en el navegador
 (0, _interactjsDefault.default)(document).on("ready", ()=>{
     transformProp = "transform" in document.body.style ? "transform" : "webkitTransform" in document.body.style ? "webkitTransform" : "mozTransform" in document.body.style ? "mozTransform" : "oTransform" in document.body.style ? "oTransform" : "msTransform" in document.body.style ? "msTransform" : null;
-});
+}); //esto es solo un ejemplo tengo que añadir muchas mas cosas aun e implementar esto dentro de lo que queremos preparar realmente pero no sin antes hacer las comprobaciones necesarias asi como preparar toda la documentación que el profesor me mande durante estos dia
 
 },{"interactjs":"fpa6e","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fpa6e":[function(require,module,exports) {
 /* interact.js 1.10.27 | https://raw.github.com/taye/interact.js/main/LICENSE */ !function(t1, e) {

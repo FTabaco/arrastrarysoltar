@@ -1,7 +1,10 @@
 body {
   font-family: Helvetica, Arial, sans-serif;
 }
-
+.titulo {
+  align-content: center;
+  
+}
 .dropzone-wrapper {
   position: absolute;
   bottom: 0;
@@ -47,5 +50,5 @@ body {
 }
 
 .draggable.-drop-possible {
-  background-color: #42bd41;
+  background-color: #53cf53;
 }
