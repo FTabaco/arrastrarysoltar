@@ -1,54 +1,29 @@
-body {
-  font-family: Helvetica, Arial, sans-serif;
-}
-.titulo {
-  align-content: center;
-  
-}
-.dropzone-wrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+/* Estilos para los elementos */
+.profesor {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
+.modulo {
+  background-color: #f0f0f0;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 5px;
+  cursor: move;
+}
+
+/* Estilos para la zona de drop */
 .dropzone {
-  overflow: hidden;
-  margin: 0.5em;
-  padding: 1em;
-  color: #666;
-  text-align: center;
-  background: #ccc;
-  line-height: 4em;
-  border: 4px dashed transparent;
-  transition:
-    background 0.15s linear,
-    border-color 0.15s linear;
+  background-color: #e0e0e0;
+  border: 2px dashed #999;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 20px;
 }
 
-.dropzone.-drop-possible {
-  border-color: #666;
-}
-
-.dropzone.-drop-over {
-  background: #666;
-  color: #fff;
-}
-
-.draggable {
-  position: relative;
-  z-index: 10;
-  width: 200px;
-  margin: 0.25em;
-  padding: 1em 2em;
-  background-color: #29e;
-  color: #fff;
-  text-align: center;
-
-  -ms-touch-action: none;
-  touch-action: none;
-}
-
-.draggable.-drop-possible {
-  background-color: #53cf53;
+.dropped {
+  opacity: 0.5;
 }
