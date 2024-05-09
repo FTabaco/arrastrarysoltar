@@ -129,90 +129,67 @@ var define;
 
 var _interactjs = _interopRequireDefault(require("interactjs"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-document.addEventListener('DOMContentLoaded', function () {
-  (0, _interactjs.default)('.modulo').draggable({
-    inertia: true,
-    modifiers: [_interactjs.default.modifiers.restrictRect({
-      restriction: 'parent',
-      endOnly: true
-    })],
-    autoScroll: true,
-    listeners: {
-      start: function start(event) {
-        console.log('Arrastrando módulo:', event.target.id);
-      },
-      move: function move(event) {
-        var target = event.target;
-        var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-        var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-        target.style.transform = "translate(".concat(x, "px, ").concat(y, "px)");
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-      },
-      end: function end(event) {
-        console.log('Módulo soltado:', event.target.id);
-      }
-    }
-  });
-  (0, _interactjs.default)('.dropzone').dropzone({
-    accept: '.modulo',
-    overlap: 0.75,
-    ondropactivate: function ondropactivate(event) {
-      event.target.classList.add('drop-active');
-    },
-    ondropdeactivate: function ondropdeactivate(event) {
-      event.target.classList.remove('drop-active');
-    },
-    ondragenter: function ondragenter(event) {
-      var draggableElement = event.relatedTarget;
-      var dropzoneElement = event.target;
-      dropzoneElement.classList.add('drop-target');
-      draggableElement.classList.add('can-drop');
-    },
-    ondragleave: function ondragleave(event) {
-      event.target.classList.remove('drop-target');
-      event.relatedTarget.classList.remove('can-drop');
-    },
-    ondrop: function ondrop(event) {
-      var draggableElement = event.relatedTarget;
-      var dropzoneElement = event.target;
-      var profesorId = dropzoneElement.getAttribute('data-profesor');
-      var moduloId = draggableElement.getAttribute('data-modulo');
-      var horas = parseInt(draggableElement.getAttribute('data-horas'));
-      console.log("Asignar Módulo " + moduloId + " al Profesor " + profesorId + " con " + horas + " horas");
-      draggableElement.classList.add('dropped');
-    }
-  });
-  (0, _interactjs.default)('.profesor').dropzone({
-    accept: '.modulo',
-    overlap: 0.75,
-    ondropactivate: function ondropactivate(event) {
-      event.target.classList.add('drop-active');
-    },
-    ondropdeactivate: function ondropdeactivate(event) {
-      event.target.classList.remove('drop-active');
-    },
-    ondragenter: function ondragenter(event) {
-      var draggableElement = event.relatedTarget;
-      var dropzoneElement = event.target.querySelector('.dropzone');
-      dropzoneElement.classList.add('drop-target');
-      draggableElement.classList.add('can-drop');
-    },
-    ondragleave: function ondragleave(event) {
-      var dropzoneElement = event.target.querySelector('.dropzone');
-      dropzoneElement.classList.remove('drop-target');
-      event.relatedTarget.classList.remove('can-drop');
-    },
-    ondrop: function ondrop(event) {
-      var draggableElement = event.relatedTarget;
-      var dropzoneElement = event.target.querySelector('.dropzone');
-      var profesorId = dropzoneElement.getAttribute('data-profesor');
-      var moduloId = draggableElement.getAttribute('data-modulo');
-      var horas = parseInt(draggableElement.getAttribute('data-horas'));
-      console.log("Asignar Módulo " + moduloId + " al Profesor " + profesorId + " con " + horas + " horas");
-      draggableElement.classList.add('dropped');
-    }
-  });
+// Función para iniciar el arrastre
+function dragMoveListener(event) {
+  var target = event.target;
+  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+  target.setAttribute('data-x', x);
+  target.setAttribute('data-y', y);
+}
+
+// Habilita el arrastre de los módulos
+(0, _interactjs.default)('.modulo').draggable({
+  inertia: true,
+  modifiers: [_interactjs.default.modifiers.restrictRect({
+    restriction: 'parent',
+    endOnly: true
+  })],
+  autoScroll: true,
+  listeners: {
+    move: dragMoveListener
+  }
+});
+
+// Habilita el soltar de los módulos en los contenedores de profesores
+(0, _interactjs.default)('.profesor .dropzone').dropzone({
+  accept: '.modulo',
+  overlap: 0.75,
+  ondropactivate: function ondropactivate(event) {
+    event.target.classList.add('drop-active');
+  },
+  ondropdeactivate: function ondropdeactivate(event) {
+    event.target.classList.remove('drop-active');
+  },
+  ondragenter: function ondragenter(event) {
+    var draggableElement = event.relatedTarget;
+    var dropzoneElement = event.target;
+    dropzoneElement.classList.add('drop-target');
+    draggableElement.classList.add('can-drop');
+  },
+  ondragleave: function ondragleave(event) {
+    event.target.classList.remove('drop-target');
+    event.relatedTarget.classList.remove('can-drop');
+  },
+  ondrop: function ondrop(event) {
+    var draggableElement = event.relatedTarget;
+    var dropzoneElement = event.target;
+    dropzoneElement.appendChild(draggableElement);
+
+    // Agrega una clase para indicar visualmente que el módulo fue soltado correctamente
+    draggableElement.classList.add('dropped');
+
+    // Elimina la clase después de un tiempo para volver al estado original
+    setTimeout(function () {
+      draggableElement.classList.remove('dropped');
+    }, 1000);
+
+    // Muestra un mensaje de confirmación
+    var moduloId = draggableElement.getAttribute('data-modulo');
+    var profesorId = dropzoneElement.closest('.profesor').getAttribute('id');
+    console.log("Has a\xF1adido el m\xF3dulo ".concat(moduloId, " al Profesor ").concat(profesorId));
+  }
 });
 },{"interactjs":"../node_modules/interactjs/dist/interact.min.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -239,7 +216,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41039" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45131" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
