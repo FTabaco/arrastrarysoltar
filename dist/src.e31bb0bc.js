@@ -129,18 +129,19 @@ var define;
 
 var _interactjs = _interopRequireDefault(require("interactjs"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-// Función para iniciar el arrastre
+// Habilitar el arrastre de asignaturas
 function dragMoveListener(event) {
   var target = event.target;
   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
   var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+  target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
   target.setAttribute('data-x', x);
   target.setAttribute('data-y', y);
 }
 
-// Habilita el arrastre de los módulos
-(0, _interactjs.default)('.modulo').draggable({
+// Objeto para almacenar el número de asignaturas en cada profesor
+var numAsignaturasPorProfesor = {};
+(0, _interactjs.default)('.asignatura').draggable({
   inertia: true,
   modifiers: [_interactjs.default.modifiers.restrictRect({
     restriction: 'parent',
@@ -148,47 +149,60 @@ function dragMoveListener(event) {
   })],
   autoScroll: true,
   listeners: {
-    move: dragMoveListener
+    move: dragMoveListener,
+    end: function end(event) {
+      var target = event.target;
+      var profesor = event.relatedTarget;
+      if (event.dropzone) {
+        target.style.backgroundColor = '#aed581'; // Verde claro
+      } else {
+        target.style.backgroundColor = '#ffeb3b'; // Amarillo pastel
+      }
+      if (numAsignaturasPorProfesor[profesor.id]) {
+        numAsignaturasPorProfesor[profesor.id]++;
+      } else {
+        numAsignaturasPorProfesor[profesor.id] = 1;
+      }
+
+      // Ajustar tamaño del profesor al soltar la asignatura dentro
+      profesor.style.width = 140 + numAsignaturasPorProfesor[profesor.id] * 10 + 'px';
+      profesor.style.height = 140 + numAsignaturasPorProfesor[profesor.id] * 10 + 'px';
+    }
   }
 });
-
-// Habilita el soltar de los módulos en los contenedores de profesores
-(0, _interactjs.default)('.profesor .dropzone').dropzone({
-  accept: '.modulo',
+(0, _interactjs.default)('.profesor').dropzone({
+  accept: '.asignatura',
   overlap: 0.75,
   ondropactivate: function ondropactivate(event) {
     event.target.classList.add('drop-active');
-  },
-  ondropdeactivate: function ondropdeactivate(event) {
-    event.target.classList.remove('drop-active');
   },
   ondragenter: function ondragenter(event) {
     var draggableElement = event.relatedTarget;
     var dropzoneElement = event.target;
     dropzoneElement.classList.add('drop-target');
     draggableElement.classList.add('can-drop');
+    draggableElement.textContent = 'Asignatura dentro';
   },
   ondragleave: function ondragleave(event) {
-    event.target.classList.remove('drop-target');
-    event.relatedTarget.classList.remove('can-drop');
-  },
-  ondrop: function ondrop(event) {
     var draggableElement = event.relatedTarget;
     var dropzoneElement = event.target;
-    dropzoneElement.appendChild(draggableElement);
+    dropzoneElement.classList.remove('drop-target');
+    draggableElement.classList.remove('can-drop');
+    draggableElement.textContent = 'Asignatura fuera';
 
-    // Agrega una clase para indicar visualmente que el módulo fue soltado correctamente
-    draggableElement.classList.add('dropped');
-
-    // Elimina la clase después de un tiempo para volver al estado original
-    setTimeout(function () {
-      draggableElement.classList.remove('dropped');
-    }, 1000);
-
-    // Muestra un mensaje de confirmación
-    var moduloId = draggableElement.getAttribute('data-modulo');
-    var profesorId = dropzoneElement.closest('.profesor').getAttribute('id');
-    console.log("Has a\xF1adido el m\xF3dulo ".concat(moduloId, " al Profesor ").concat(profesorId));
+    // Ajustar tamaño del profesor al sacar la asignatura
+    var numAsignaturas = numAsignaturasPorProfesor[dropzoneElement.id];
+    if (numAsignaturas) {
+      dropzoneElement.style.width = 140 + numAsignaturas * 10 + 'px';
+      dropzoneElement.style.height = 140 + numAsignaturas * 10 + 'px';
+    }
+  },
+  ondrop: function ondrop(event) {
+    event.relatedTarget.textContent = 'Asignatura asignada a ' + event.target.textContent;
+  },
+  ondropdeactivate: function ondropdeactivate(event) {
+    event.target.classList.remove('drop-active');
+    event.target.classList.remove('drop-target');
   }
 });
 },{"interactjs":"../node_modules/interactjs/dist/interact.min.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -216,7 +230,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45131" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43259" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
