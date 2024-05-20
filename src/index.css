@@ -1,6 +1,7 @@
 body {
-  background-color: #9e9c9c; /* Fondo más suave */
+  background-color: #a7c1c7c2; /* Fondo más suave */
   font-family: Arial, sans-serif;
+  position: relative; /* Añadido para permitir la posición absoluta del botón */
 }
 
 h1 {
@@ -39,6 +40,33 @@ h1 {
 /* Cambiar color al soltar la asignatura en el profesor */
 .profesor.drop-target {
   background-color: #aed58181; /* Verde claro */
+}
+
+/* Botón para cambiar a profesores de secundaria */
+button {
+  position: absolute; /* Posicionar de manera absoluta */
+  top: 20px; /* Espacio desde la parte superior */
+  right: 20px; /* Espacio desde el lado derecho */
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Efecto al pasar el ratón sobre el botón */
+button:hover {
+  background-color: #45a049; /* Verde más oscuro */
+  transform: scale(1.05); /* Aumentar tamaño */
+}
+
+/* Efecto al hacer clic en el botón */
+button:active {
+  background-color: #3e8e41; /* Verde aún más oscuro */
+  transform: scale(0.95); /* Reducir tamaño */
 }
 
 /* Hacer la página totalmente responsiva */

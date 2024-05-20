@@ -1,0 +1,54 @@
+body {
+    background-color: #e0d786c2; /* Fondo más suave */
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+    font-family: Arial Black;
+    font-weight: bold;
+    font-size: 30px;
+    color: #202020; /* Color de fondo del texto */
+    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3);
+  }
+  
+  .asignatura {
+    background-color: #748aec; 
+    color: #000000;
+    padding: 3px; /* Reducir el padding */
+    margin: 5px;
+    border-radius: 3px; /* Reducir el radio del borde */
+    cursor: pointer;
+    width: 25px; 
+    height: 25px;
+  }
+  
+  .profesor {
+    background-color: #f59bbe; /* Azul suave */
+    padding: 20px; /* Aumentar el padding */
+    margin: 5px;
+    border: 1px solid #363636; /* Borde más claro */
+    border-radius: 15px; /* Aumentar el radio del borde */
+    cursor: pointer;
+    display: inline-block; /* Mostrar profesores en línea */
+    transition: all 0.3s ease; /* Añadir transición suave */
+    width: 160px; /* Hacer las casillas de profesores más grandes */
+    height: 140px; /* Hacer las casillas de profesores más grandes */
+  }
+  
+  /* Cambiar color al soltar la asignatura en el profesor */
+  .profesor.drop-target {
+    background-color: #8182d581; /* Verde claro */
+  }
+  
+  /* Hacer la página totalmente responsiva */
+  @media screen and (min-width: 768px) {
+    /* Para pantallas más grandes, dividir en dos columnas */
+    .profesor, .asignatura {
+      width: 120px; /* Ajustar tamaño para pantallas más grandes */
+      height: 100px;
+    }
+  }
+  
+
+/*# sourceMappingURL=/index2.2d25db9c.css.map */
